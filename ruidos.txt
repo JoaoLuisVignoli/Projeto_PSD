@@ -1,0 +1,24 @@
+Ruídos (Imagens de Ultrassom)
+
+Ruído Speckle: Surge da soma corrente de ecos refletidos por diversos espalhadores sub-resolvidos presentes no tecido. Devido a interferência entre essas contribuições gera o padrão granular característico da imagem de ultrassom.
+
+-O Ruído é dependente do sinal;
+-O Ruído afeta fortemente medidas locais de contraste e orientação;
+-O Ruído pode ser confundido com textura verdadeira se não for tratado adequadamente
+
+Redução de Ruído: É muito importante já que pode ser entendida como uma etapa de preservação de estrutura. A redução de ruído é útil para:
+
+-Filtros de Gabor: Respondem a orientação e frequência espacial local, logo, ruído residual pode gerar respostas falsas , enquanto filtragem excessiva pode eliminar padrões reais;
+
+-Transformada de Hough: Depende da presença de bordas e alinhamentos consistentes, portanto bordas borradas ou interrompidas reduzem a estabilidade da detecção;
+
+-Espectro de Potência 2D: Sensível a distribuição de energia espacial. O Speckle pode inflar componentes de alta frequência e mascarar anisotropias relevantes.
+
+Técnica Principal: Transformação Logarítmica + Difusão Anisotrópica: A combinação dessas duas técnicas é coerente com a natureza multiplicativa do Speckle e com necessidade de preservar bordas importantes.
+
+Transformação Logarítmica: Essa transformação converte o problema em uma forma aproximadamente aditiva, o que facilita a aplicação de metódos clássicos de filtragem e regularização. Abordagem homomórfica: transforma o modelo multiplicativo em aditivo, faz a filtragem, retorna ao domínio original
+
+Difusão Anisotrópica: Busca suavizar preferencialmente o interior de regiões homogêneas, preservando descontinuidades associadas a bordas.
+
+
+
