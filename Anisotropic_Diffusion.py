@@ -57,7 +57,7 @@ img_gray = cv2.imread('noisedImage.tif', cv2.IMREAD_GRAYSCALE)
 log_img = log_transform(img_gray)
 
 # Difusão Anisotrópica
-ans_log_img = anisotropic_diffusion(log_img, iterations=20, k=30, refresh_rate=0.1, eq=1)
+ans_log_img = anisotropic_diffusion(log_img, iterations=10, k=2, refresh_rate=0.1, eq=1)
 
 # Transformação Exponencial (Retorno ao domínio original)
 ans_img = exp_transform(ans_log_img)
@@ -66,17 +66,4 @@ ans_img = exp_transform(ans_log_img)
 ans_img = np.clip(ans_img, 0, 255).astype(np.uint8)
 
 # Visualização dos resultados
-plt.figure(figsize=(40, 20))
-
-plt.subplot(1, 2, 1)
-plt.title('Original')
-plt.imshow(img_gray, cmap='gray')
-plt.axis("off")
-
-plt.subplot(1, 2, 2)
-plt.title('Transformação Logarítimica + Difusão Anisotrópica')
-plt.imshow(ans_img, cmap='gray')
-plt.axis("off")
-
-plt.tight_layout()
-plt.show()
+cv2.imwrite("denoisedImage.tif", ans_img)
