@@ -23,7 +23,7 @@ def gabor_filter(size, theta, f, sigma, gamma, psi):
 
 
 # Gera o filtro
-kernel = gabor_filter(20, -3*np.pi / 5 , 0.1, 5, 0.5, 0)
+kernel = gabor_filter(6, -3 * np.pi / 5 , 0.12, 4, 0.3, 0)
 
 # Carrega a imagem sem ruído
 img = cv2.imread('denoisedImage.tif', cv2.IMREAD_GRAYSCALE)
