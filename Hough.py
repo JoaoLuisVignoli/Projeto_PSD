@@ -7,7 +7,7 @@ img = cv2.imread('filteredImage.tif', cv2.IMREAD_GRAYSCALE)
 cdst = cv2.cvtColor(img, cv2.COLOR_GRAY2BGR)
 cdstP = np.copy(cdst)
 
-lines = cv2.HoughLines(img, 0.55, np.pi / 180, 100, 100, 10)
+lines = cv2.HoughLines(img, 1, np.pi / 90, 370)
 
 if lines is not None:
     for i in range(len(lines)):
