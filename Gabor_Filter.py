@@ -1,10 +1,8 @@
 import numpy as np
 import cv2
-import matplotlib.pyplot as plt
 
 # Implementação do filtro de Gabor por meio da fórmula disponibilzida
 def gabor_filter(size, theta, f, sigma, gamma, psi):
-    
     # Tamanho do corpo do filtro
     x_range = np.linspace(-size, size, 2 * size + 1)
     y_range = np.linspace(-size, size, 2 * size + 1)
@@ -26,7 +24,7 @@ def gabor_filter(size, theta, f, sigma, gamma, psi):
 kernel = gabor_filter(6, -3 * np.pi / 5 , 0.14, 4.4, 0.1, 0)
 
 # Carrega a imagem sem ruído
-img = cv2.imread('denoisedImage.tif', cv2.IMREAD_GRAYSCALE)
+img = cv2.imread('ROI.tif', cv2.IMREAD_GRAYSCALE)
 
 # Faz a convolução da imagem com o filtro
 filtered_img = cv2.filter2D(img, -1, kernel)
@@ -34,7 +32,7 @@ filtered_img = cv2.filter2D(img, -1, kernel)
 # Salvar resultado
 cv2.imwrite("filteredImage.tif", filtered_img)
 
-plt.figure(figsize=(6, 6))
-plt.imshow(kernel, cmap='gray')
-plt.axis('off')
-plt.show()
+# plt.figure(figsize=(6, 6))
+# plt.imshow(kernel, cmap='gray')
+# plt.axis('off')
+# plt.show()
