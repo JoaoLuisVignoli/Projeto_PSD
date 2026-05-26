@@ -30,7 +30,7 @@ def gabor_2d(size, angle, frequency, sigma, gamma, psi):
 
     return gabor
 
-""" # Gera o filtro (size, theta, f, sigma, gamma, psi)
+# Gera o filtro (size, theta, f, sigma, gamma, psi)
 kernel = gabor_2d(33, 75, 0.08, 5, 0.4, 0)
 
 # Carrega a imagem sem ruído
@@ -44,4 +44,4 @@ cv2.imwrite("filteredImage.tif", filtered_img)
 
 kernel_norm = cv2.normalize(kernel, None, 0, 255, cv2.NORM_MINMAX, cv2.CV_8U)
 
-cv2.imwrite('GaborKernel.png', kernel_norm) """
+cv2.imwrite('GaborKernel.png', kernel_norm)
