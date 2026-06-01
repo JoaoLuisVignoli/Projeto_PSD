@@ -2,16 +2,23 @@ import GaborFilterBank
 import pandas as pd
 import matplotlib.pyplot as plt
 import numpy as np
-from random import random, seed
 
 contabilizador_pixels = []
 
+for i in GaborFilterBank.vetor_imagens_threshold:
+    quantidade_pixels = np.sum(i == 255)
+    contabilizador_pixels.append(quantidade_pixels)
+
+print(len(contabilizador_pixels))
+print(contabilizador_pixels)
+
 # Diagrama de Rosas
-maxes = [5, 5, 5, 2, 2, 10, 10, 10]
+max = [max(contabilizador_pixels) * 1.5] * 8 
+
 df = pd.DataFrame({
-    'categories': [f'Cat_{i}' for i in range(len(maxes))],
-    'scores': [random() * m for m in maxes],
-    'max_values': maxes,
+    'categories': ['0', '25', '50', '75', '100', '125', '150', '175'],
+    'scores': contabilizador_pixels,
+    'max_values': max,
 })
 df['pct'] = df['scores'] / df['max_values']
 

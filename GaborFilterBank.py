@@ -15,7 +15,7 @@ max_img = []
 min_img = []
 
 for i in theta:
-    kernel = Gabor_Filter.gabor_2d(33, i, 0.06, 9, 0.1, 0)
+    kernel = Gabor_Filter.gabor_2d(33, i, 0.06, 9, 0.6, 0)
     filtered_img = cv2.filter2D(img, cv2.CV_32F, kernel)
     
     filtered_clip = np.clip(filtered_img, 0, None)
@@ -34,14 +34,14 @@ for i in theta:
 valor_maximo = max(max_img)
 
 for i in vetor_imagens_filtradas:
-    _, thresh = cv2.threshold(i, 0.25 * valor_maximo, 255, cv2.THRESH_BINARY)
+    _, thresh = cv2.threshold(i, 0.4 * valor_maximo, 255, cv2.THRESH_BINARY)
 
     thresh = thresh.astype(np.uint8)
 
     vetor_imagens_threshold.append(thresh)
 
-print(min_img)
-print(max_img)
+cv2.imwrite('filtro_Gabor_50.tif', vetor_imagens_filtradas[4])
+cv2.imwrite('Threshold_50.tif', vetor_imagens_threshold[4])
 
-cv2.imwrite('filtro_Gabor.tif', vetor_imagens_filtradas[3])
+cv2.imwrite('filtro_Gabor_75.tif', vetor_imagens_filtradas[3])
 cv2.imwrite('Threshold_75.tif', vetor_imagens_threshold[3])
