@@ -30,22 +30,22 @@ def gabor_2d(size, angle, frequency, sigma, gamma, psi):
 
     return gabor
 
-# Gera o filtro (size, theta, f, sigma, gamma, psi)
-kernel = gabor_2d(33, 75, 0.06, 9, 0.1, 0)
+# # Gera o filtro (size, theta, f, sigma, gamma, psi)
+# kernel = gabor_2d(33, 75, 0.06, 9, 0.1, 0)
 
-# Carrega a imagem sem ruído
-img = cv2.imread('ROI.tif', cv2.IMREAD_GRAYSCALE)
+# # Carrega a imagem sem ruído
+# img = cv2.imread('ROI.tif', cv2.IMREAD_GRAYSCALE)
 
-# Faz a convolução da imagem com o filtro
-filtered_img = cv2.filter2D(img, cv2.CV_32F, kernel)
+# # Faz a convolução da imagem com o filtro
+# filtered_img = cv2.filter2D(img, cv2.CV_32F, kernel)
 
-filtered_clip = np.clip(filtered_img, 0, None)
+# filtered_clip = np.clip(filtered_img, 0, None)
     
-filtered_img_norm = cv2.normalize(filtered_clip, None, 0, 255, cv2.NORM_MINMAX).astype(np.uint8)
+# filtered_img_norm = cv2.normalize(filtered_clip, None, 0, 255, cv2.NORM_MINMAX).astype(np.uint8)
 
-# Salvar resultado
-cv2.imwrite("filteredImage.tif", filtered_img_norm)
+# # Salvar resultado
+# cv2.imwrite("filteredImage.tif", filtered_img_norm)
 
-kernel_norm = cv2.normalize(kernel, None, 0, 255, cv2.NORM_MINMAX, cv2.CV_8U)
+# kernel_norm = cv2.normalize(kernel, None, 0, 255, cv2.NORM_MINMAX, cv2.CV_8U)
 
-cv2.imwrite('GaborKernel.png', kernel_norm)
+# cv2.imwrite('GaborKernel.png', kernel_norm)

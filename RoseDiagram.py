@@ -13,10 +13,10 @@ print(len(contabilizador_pixels))
 print(contabilizador_pixels)
 
 # Diagrama de Rosas
-max = [max(contabilizador_pixels) * 1.5] * 8 
+max = [max(contabilizador_pixels) * 1.5] * 13 
 
 df = pd.DataFrame({
-    'categories': ['0', '25', '50', '75', '100', '125', '150', '175'],
+    'categories': ['0', '15', '30', '45', '60', '75', '90', '105', '120', '135', '150', '165', '180'],
     'scores': contabilizador_pixels,
     'max_values': max,
 })

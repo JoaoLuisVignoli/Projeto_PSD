@@ -52,6 +52,7 @@ def anisotropic_diffusion(img, iterations, k, refresh_rate, eq):
 
 # Passagem para a escala de cinza
 img_gray = cv2.imread('noisedImage.tif', cv2.IMREAD_GRAYSCALE)
+#img_gray = cv2.imread('NovaImagem.tif', cv2.IMREAD_GRAYSCALE)
 
 # Transformação Logarítmica
 log_img = log_transform(img_gray)

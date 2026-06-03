@@ -4,9 +4,9 @@ import cv2
 import matplotlib.pyplot as plt
 
 img = cv2.imread('ROI.tif', cv2.IMREAD_GRAYSCALE)
-#img = cv2.imread('image.png', cv2.IMREAD_GRAYSCALE)
+#img = cv2.imread('imagemSintetica.png', cv2.IMREAD_GRAYSCALE)
 
-theta = np.array([0, 25, 50, 75, 100, 125, 150, 175])
+theta = np.array([0, 15, 30, 45, 60, 75, 90, 105, 120, 135, 150, 165, 180])
 
 vetor_imagens_filtradas = []
 vetor_imagens_threshold = []
@@ -16,7 +16,7 @@ max_img = []
 min_img = []
 
 for i in theta:
-    kernel = Gabor_Filter.gabor_2d(33, i, 0.06, 9, 0.1, 0)
+    kernel = Gabor_Filter.gabor_2d(33, i, 0.12, 5, 0.6, 0)
     filtered_img = cv2.filter2D(img, cv2.CV_32F, kernel)
     
     filtered_clip = np.clip(filtered_img, 0, None)
@@ -45,42 +45,44 @@ for i in vetor_imagens_filtradas:
 # ==========================================
 # PLOT 1: Imagens Filtradas (fig1, axes1)
 # ==========================================
-fig1, axes1 = plt.subplots(2, 4, figsize=(16, 8))
+fig1, axes1 = plt.subplots(4, 4, figsize=(16, 12)) # Alterado para 4x4 e ajustado tamanho
 axes1 = axes1.flatten()
 
-for i in range(len(vetor_imagens_filtradas)):
-    axes1[i].imshow(vetor_imagens_filtradas[i], cmap='gray')
-    axes1[i].set_title(f'Filtro Gabor - {theta[i]}°')
-    axes1[i].axis('off')
+for i in range(len(axes1)):
+    if i < len(vetor_imagens_filtradas):
+        axes1[i].imshow(vetor_imagens_filtradas[i], cmap='gray')
+        axes1[i].set_title(f'Filtro Gabor - {theta[i]}°')
+    axes1[i].axis('off') # Desliga os eixos inclusive dos plots vazios
 
-fig1.tight_layout() # Organiza apenas a janela 1
+fig1.tight_layout() 
 
 # ==========================================
 # PLOT 2: Imagens com Threshold (fig2, axes2)
 # ==========================================
-fig2, axes2 = plt.subplots(2, 4, figsize=(16, 8))
+fig2, axes2 = plt.subplots(4, 4, figsize=(16, 12)) # Alterado para 4x4 e ajustado tamanho
 axes2 = axes2.flatten()
 
-for i in range(len(vetor_imagens_threshold)):
-    axes2[i].imshow(vetor_imagens_threshold[i], cmap='gray')
-    axes2[i].set_title(f'Threshold - {theta[i]}°')
+for i in range(len(axes2)):
+    if i < len(vetor_imagens_threshold):
+        axes2[i].imshow(vetor_imagens_threshold[i], cmap='gray')
+        axes2[i].set_title(f'Threshold - {theta[i]}°')
     axes2[i].axis('off')
 
-fig2.tight_layout() # Organiza apenas a janela 2
+fig2.tight_layout() 
 
 # ==========================================
 # PLOT 3: Kernels do Filtro de Gabor (fig3, axes3)
 # ==========================================
-fig3, axes3 = plt.subplots(2, 4, figsize=(16, 8))
+fig3, axes3 = plt.subplots(4, 4, figsize=(16, 12)) # Alterado para 4x4 e ajustado tamanho
 axes3 = axes3.flatten()
 
-for i in range(len(vetor_imagens_filtro)):
-    # Plota os kernels armazenados no vetor correspondente
-    axes3[i].imshow(vetor_imagens_filtro[i], cmap='gray')
-    axes3[i].set_title(f'Kernel Gabor - {theta[i]}°')
+for i in range(len(axes3)):
+    if i < len(vetor_imagens_filtro):
+        axes3[i].imshow(vetor_imagens_filtro[i], cmap='gray')
+        axes3[i].set_title(f'Kernel Gabor - {theta[i]}°')
     axes3[i].axis('off')
 
-fig3.tight_layout() # Organiza a janela 3
+fig3.tight_layout() 
 
-# Exibe ambas as janelas ao mesmo tempo
+# Exibe todas as janelas ao mesmo tempo
 plt.show()
