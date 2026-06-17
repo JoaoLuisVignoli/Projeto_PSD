@@ -51,5 +51,3 @@ for img_atual, dados in enumerate(matriz__pixels):
 
     caminho_diagrama = os.path.join('ImagensSaida/DiagramaDeRosas', f'Diagrama_Rosas_Imagem{img_atual + 1}.png')
     plt.savefig(caminho_diagrama, dpi=300, bbox_inches='tight')
-    
-    plt.show()

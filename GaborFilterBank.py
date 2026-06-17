@@ -5,22 +5,17 @@ import cv2
 import numpy as np
 import matplotlib.pyplot as plt
 
-""" img = cv2.imread('ROI.tif', cv2.IMREAD_GRAYSCALE)
-#img = cv2.imread('imagemSintetica.png', cv2.IMREAD_GRAYSCALE)
- """
-
 theta = np.array([0, 15, 30, 45, 60, 75, 90, 105, 120, 135, 150, 165, 180])
 
 matriz_imagens_filtradas = []
 matriz_imagens_threshold = []
 matriz_imagens_filtro = []
 
-max_img = []
-min_img = []
 
 for i in range(len(Mascara.ROIs)):
     linha_filtrada = []
     linha_filtro = []
+    linha_max = []
 
     for j in theta:
         kernel = Gabor_Filter.gabor_2d(33, j, 0.12, 5, 0.6, 0)
@@ -35,8 +30,7 @@ for i in range(len(Mascara.ROIs)):
         caminho_gabor = os.path.join('ImagensSaida/Gabor', f'Imagem{i+1}_Angulo{j}.tif')
         cv2.imwrite(caminho_gabor, filtered_img_norm)
 
-        max_img.append(np.max(filtered_img_norm))
-        min_img.append(np.min(filtered_img_norm))
+        linha_max.append(np.max(filtered_img_norm))
 
         kernel_norm = cv2.normalize(kernel, None, 0, 255, cv2.NORM_MINMAX, cv2.CV_8U)
 
@@ -45,7 +39,7 @@ for i in range(len(Mascara.ROIs)):
     matriz_imagens_filtradas.append(linha_filtrada)
     matriz_imagens_filtro.append(linha_filtro)
 
-    valor_maximo = max(max_img)
+    valor_maximo = max(linha_max)
 
     linha_threshold = []
 
