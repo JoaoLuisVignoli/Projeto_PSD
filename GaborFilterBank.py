@@ -1,5 +1,5 @@
 import Gabor_Filter
-import Mascara
+import Anisotropic_Diffusion
 import os
 import cv2
 import numpy as np
@@ -12,14 +12,14 @@ matriz_imagens_threshold = []
 matriz_imagens_filtro = []
 
 
-for i in range(len(Mascara.ROIs)):
+for i in range(len(Anisotropic_Diffusion.semRuido)):
     linha_filtrada = []
     linha_filtro = []
     linha_max = []
 
     for j in theta:
         kernel = Gabor_Filter.gabor_2d(33, j, 0.12, 5, 0.6, 0)
-        filtered_img = cv2.filter2D(Mascara.ROIs[i], cv2.CV_32F, kernel)
+        filtered_img = cv2.filter2D(Anisotropic_Diffusion.semRuido[i], cv2.CV_32F, kernel)
 
         filtered_clip = np.clip(filtered_img, 0, None)
 

@@ -1,3 +1,5 @@
+import Mascara
+import os
 import cv2
 import numpy as np
 import matplotlib.pyplot as plt
@@ -49,22 +51,18 @@ def anisotropic_diffusion(img, iterations, k, refresh_rate, eq):
 
     return denoisedImage
 
+semRuido = []
 
-# Passagem para a escala de cinza
-img_gray = cv2.imread('noisedImage.tif', cv2.IMREAD_GRAYSCALE)
-#img_gray = cv2.imread('NovaImagem.tif', cv2.IMREAD_GRAYSCALE)
+for img_atual, i in enumerate(Mascara.ROIs):
+    log_img = log_transform(i)
 
-# Transformação Logarítmica
-log_img = log_transform(img_gray)
+    ans_log_img = anisotropic_diffusion(log_img, iterations=10, k=2, refresh_rate=0.1, eq=1)
 
-# Difusão Anisotrópica
-ans_log_img = anisotropic_diffusion(log_img, iterations=10, k=2, refresh_rate=0.1, eq=1)
+    ans_img = exp_transform(ans_log_img)
 
-# Transformação Exponencial (Retorno ao domínio original)
-ans_img = exp_transform(ans_log_img)
+    ans_img = np.clip(ans_img, 0, 255).astype(np.uint8)
 
-# Ajuste de escala final para exibição e salvamento (uint8)
-ans_img = np.clip(ans_img, 0, 255).astype(np.uint8)
+    semRuido.append(ans_img)
 
-# Visualização dos resultados
-cv2.imwrite("denoisedImage.tif", ans_img)
+    caminho_semRuido = os.path.join('ImagensSaida/DifusaoAnisotropica', f'Imagem{img_atual}_semRuido.tif')
+    cv2.imwrite(caminho_semRuido, ans_img)
