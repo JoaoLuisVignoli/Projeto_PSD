@@ -5,7 +5,8 @@ import cv2
 import numpy as np
 import matplotlib.pyplot as plt
 
-theta = np.array([0, 15, 30, 45, 60, 75, 90, 105, 120, 135, 150, 165, 180])
+theta = np.array([0, 5, 10, 15, 20, 25, 30, 35, 40, 45, 50, 55, 60, 65, 70, 75, 80, 85, 
+                  90, 95, 100, 105, 110, 115, 120, 125, 130, 135, 140, 145, 150, 155, 160, 165, 170, 175, 180])
 
 matriz_imagens_filtradas = []
 matriz_imagens_threshold = []

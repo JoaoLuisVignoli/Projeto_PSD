@@ -5,6 +5,8 @@ import pandas as pd
 import matplotlib.pyplot as plt
 
 matriz__pixels = []
+strings_theta = [str(i) for i in GaborFilterBank.theta]
+
 
 for linha in GaborFilterBank.matriz_imagens_threshold:
     linha_contabilizadora = []
@@ -20,7 +22,7 @@ for img_atual, dados in enumerate(matriz__pixels):
     max_val = [max(dados) * 1.5] * len(GaborFilterBank.theta)
 
     df = pd.DataFrame({
-        'categories': ['0', '15', '30', '45', '60', '75', '90', '105', '120', '135', '150', '165', '180'],
+        'categories': ['0', '', '', '15', '', '', '30', '', '', '45', '', '', '60', '', '', '75', '', '', '90', '', '', '105', '', '', '120', '', '', '135', '', '', '150', '', '', '165', '', '', '180'],
         'scores': dados,
         'max_values': max_val,
     })

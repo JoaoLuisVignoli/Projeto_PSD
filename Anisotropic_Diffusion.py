@@ -64,5 +64,5 @@ for img_atual, i in enumerate(Mascara.ROIs):
 
     semRuido.append(ans_img)
 
-    caminho_semRuido = os.path.join('ImagensSaida/DifusaoAnisotropica', f'Imagem{img_atual}_semRuido.tif')
+    caminho_semRuido = os.path.join('ImagensSaida/DifusaoAnisotropica', f'Imagem{img_atual+1}_semRuido.tif')
     cv2.imwrite(caminho_semRuido, ans_img)
