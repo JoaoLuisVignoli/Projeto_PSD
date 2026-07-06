@@ -3,54 +3,62 @@ import Anisotropic_Diffusion
 import os
 import cv2
 import numpy as np
-import matplotlib.pyplot as plt
+from scipy import signal
 
+# Vetor de ângulos
 theta = np.array([0, 5, 10, 15, 20, 25, 30, 35, 40, 45, 50, 55, 60, 65, 70, 75, 80, 85, 
                   90, 95, 100, 105, 110, 115, 120, 125, 130, 135, 140, 145, 150, 155, 160, 165, 170, 175, 180])
 
+# Matriz para guardar as imagens de saída
 matriz_imagens_filtradas = []
 matriz_imagens_threshold = []
-matriz_imagens_filtro = []
 
-
+# Aplicação do banco de filtros de Gabor e Threshold
 for i in range(len(Anisotropic_Diffusion.semRuido)):
     linha_filtrada = []
-    linha_filtro = []
-    linha_max = []
+    linha_filtrada_normalizada = []
 
     for j in theta:
+        
+        # Normalização dos valores dos pixels da imagem para o range de [0, 1]
+        imagem_normalizada = Anisotropic_Diffusion.semRuido[i] / 255
+        
+        # Criação do Kernel do Filtro
         kernel = Gabor_Filter.gabor_2d(33, j, 0.12, 5, 0.6, 0)
-        filtered_img = cv2.filter2D(Anisotropic_Diffusion.semRuido[i], cv2.CV_32F, kernel)
+        
+        # Convolução da imagem com o Kernel
+        filtered_img = signal.convolve2d(imagem_normalizada, kernel, mode='same')
 
+        # Clip para remover os valores negativos
         filtered_clip = np.clip(filtered_img, 0, None)
+        linha_filtrada.append(filtered_clip)
 
-        filtered_img_norm = cv2.normalize(filtered_clip, None, 0, 255, cv2.NORM_MINMAX).astype(np.uint8)
-
-        linha_filtrada.append(filtered_img_norm)
-
-        caminho_gabor = os.path.join('ImagensSaida/Gabor', f'Imagem{i+1}_Angulo{j}.tif')
-        cv2.imwrite(caminho_gabor, filtered_img_norm)
-
-        linha_max.append(np.max(filtered_img_norm))
-
-        kernel_norm = cv2.normalize(kernel, None, 0, 255, cv2.NORM_MINMAX, cv2.CV_8U)
-
-        linha_filtro.append(kernel_norm)
-
-    matriz_imagens_filtradas.append(linha_filtrada)
-    matriz_imagens_filtro.append(linha_filtro)
-
-    valor_maximo = max(linha_max)
+        # Salvamento das imagens dos kernels de Gabor
+        if i == 0:
+            kernel_norm = cv2.normalize(kernel, None, 0, 255, cv2.NORM_MINMAX, cv2.CV_8U)
+            caminho_kernel = os.path.join('ImagensSaida/Kernel', f'Kernel_Angulo{j}.png')
+            cv2.imwrite(caminho_kernel, kernel_norm)
+        
+    maximo_global = np.max(linha_filtrada)
 
     linha_threshold = []
 
-    for pos_atual, l in enumerate(linha_filtrada):
-        _, thresh = cv2.threshold(l, 0.4 * valor_maximo, 255, cv2.THRESH_BINARY)
+    # Aplicando o Threshold
+    for pos_atual, imagem in enumerate(linha_filtrada):
+        
+        # Normalização para a escala de [0, 255] para visualização da imagem
+        imagem_filtrada_normalizada = ((imagem / maximo_global) * 255).astype(np.uint8)
+        linha_filtrada_normalizada.append(imagem_filtrada_normalizada)
+        
+        # Threshold binário
+        _, thresh = cv2.threshold(imagem_filtrada_normalizada, 0.3 * 255, 255, cv2.THRESH_BINARY)
 
+        # Conversão para inteiro
         thresh = thresh.astype(np.uint8)
 
         linha_threshold.append(thresh)
 
+        # Salvamento da imagem
         angulo_atual = theta[pos_atual]
         caminho_thresh = os.path.join('ImagensSaida/Threshold', f'Imagem{i+1}_Threshold_{angulo_atual}.tif')
         cv2.imwrite(caminho_thresh, thresh)

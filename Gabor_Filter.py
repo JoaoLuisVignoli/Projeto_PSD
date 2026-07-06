@@ -4,7 +4,7 @@ import cv2
 # Implementação do filtro de Gabor por meio da fórmula disponibilzida
 def gabor_2d(size, angle, frequency, sigma, gamma, psi):
 
-    theta = (angle * np.pi) / 180
+    theta = ((90 - angle) * np.pi) / 180
 
     # Grade de coordenadas
     half = size // 2
